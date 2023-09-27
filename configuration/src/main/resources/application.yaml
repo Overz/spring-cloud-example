@@ -1,0 +1,25 @@
+server:
+  port: 4000
+  servlet:
+    context-path: "/spring-cloud"
+
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: "configuration-service"
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/Overz/spring-cloud-example"
+          default-label: "master"
+          search-paths:
+            - "properties/{application}/*"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"

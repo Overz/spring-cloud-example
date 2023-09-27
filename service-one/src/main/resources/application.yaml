@@ -1,0 +1,17 @@
+server:
+  port: 3000
+  servlet:
+    context-path: "/spring-cloud"
+
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: "service-one"
+  config:
+    import:
+      - configserver:http://localhost:4000/spring-cloud/
+  cloud:
+    config:
+      profile: "profile-2"
+      label: "master"
