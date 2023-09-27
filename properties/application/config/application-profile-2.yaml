@@ -16,4 +16,4 @@ management:
 
 properties-example:
   greeting: "Hello "
-  default-value: "Test 2"
+  default-value: "Profile 2"
