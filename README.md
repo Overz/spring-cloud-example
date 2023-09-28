@@ -126,3 +126,41 @@ properties/
   │       └── application.yml
 
 ```
+
+---
+
+## Step 4 - Atualizando Valores Realtime
+
+Como o serviço de `configuration` já esta consumindo e atualizando constantemente os arquivos de configuração das
+aplicações (.yaml) não precisamos nos preocupar com ele.
+
+Para atualizar os valores em realtime, a dependência do `actuator` precisa ser adicionada aos microserviços:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+Também é necessário adicionar a seguinte configuração de `@RefreshScope` no arquivo de configuração de propriedades
+da aplicação para que o spring entenda quem e onde ele deve atualizar:
+
+```java
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+
+@Component
+@RefreshScope
+@ConfigurationProperties("properties-example")
+public class MinhaClasseDePropriedades {
+  // código...
+}
+```
+
+Após **ATUALZIAR** os arquivos de configuração (neste caso, no github), podemos realizar uma requisição HTTP para
+o endpoint abaixo, assim emitindo um evento ao spring para que atualize todos os componentes que possuam `@RefreshScope`.
+
+```http request
+# https://<host>:<port>/<context-path>/actuator/refresh
+POST http://localhost:3000/spring-cloud/actuator/refresh
+```
