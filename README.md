@@ -143,6 +143,20 @@ Para atualizar os valores em realtime, a dependência do `actuator` precisa ser 
 </dependency>
 ```
 
+O `actuator` possui
+algumas [configurações](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html),
+a para habilitar o endpoint `/refresh`, devemos seguir a seguinte configuração nos arquivos de configuração que
+habilitar todos os endpoints do `actuator`:
+
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*" # Consultar a documentação para escolher especificamente o que habilitar para a aplicação
+```
+
 Também é necessário adicionar a seguinte configuração de `@RefreshScope` no arquivo de configuração de propriedades
 da aplicação para que o spring entenda quem e onde ele deve atualizar:
 
@@ -157,8 +171,8 @@ public class MinhaClasseDePropriedades {
 }
 ```
 
-Após **ATUALZIAR** os arquivos de configuração (neste caso, no github), podemos realizar uma requisição HTTP para
-o endpoint abaixo, assim emitindo um evento ao spring para que atualize todos os componentes que possuam `@RefreshScope`.
+Após **ATUALZIAR** os arquivos de configuração (neste caso, no github), podemos realizar uma requisição HTTP para o
+endpoint abaixo, assim emitindo um evento ao spring para que atualize todos os componentes que possuam `@RefreshScope`.
 
 ```http request
 # https://<host>:<port>/<context-path>/actuator/refresh
